@@ -45,6 +45,16 @@ const controls = new OrbitControls(
 );
 
 controls.enableDamping = true;
+controls.enableZoom = false; // Desactivamos el desplazamiento físico de la cámara
+
+// Creamos un zoom de "lente" (FOV) para acercar o alejar la imagen de fondo
+window.addEventListener('wheel', (event) => {
+  // Ajustar el ángulo de visión de la cámara dependiendo de la rueda del ratón
+  camera.fov += event.deltaY * 0.05;
+  // Limitamos el zoom para que no se voltee la imagen (min 20, max 100)
+  camera.fov = Math.max(20, Math.min(100, camera.fov)); 
+  camera.updateProjectionMatrix(); // Actualizamos la cámara con el nuevo zoom
+});
 
 // Animation
 function animate() {
